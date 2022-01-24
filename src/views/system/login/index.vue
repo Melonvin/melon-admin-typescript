@@ -34,30 +34,32 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Login',
-  data () {
-    return {
-      loginForm: {
-        username: '',
-        password: ''
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
-        password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
-      },
-      loading: false
-    }
-  },
-  methods: {
-    handleLogin () {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-        }
-      })
-    }
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
+@Component({
+  name: 'Login'
+})
+
+export default class extends Vue {
+  private loginForm = {
+    username: '',
+    password: ''
+  }
+
+  private loginRules = {
+    username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
+    password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+  }
+
+  private loading = false
+
+  private handleLogin () {
+    (this.$refs.loginForm as ElForm).validate((valid: boolean) => {
+      if (valid) {
+        this.loading = true
+      }
+    })
   }
 }
 </script>
